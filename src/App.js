@@ -8,6 +8,7 @@ import { Toaster } from "react-hot-toast";
 import EditDetails from "./pages/EditDetails";
 import { AppContext } from "./context/AppContext";
 import { useState } from "react";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 function App() {
   const [usersData, setUsersData] = useState([]);
@@ -16,16 +17,18 @@ function App() {
     <div>
       {/* Provide the usersData and setUsersData to the AppContext */}
       <AppContext.Provider value={{ usersData, setUsersData }}>
-        <Toaster position="top-center" reverseOrder={false} />
-        <Routes>
-           {/* Define the routes for different pages */}
-          <Route path="/" element={<Home />} />
-          <Route path="/edit-form" element={<Home />} />
-          <Route path="/view-user/:id" element={<ViewDetails />} />
-          <Route path="/add-user" element={<AddDetails />} />
-          <Route path="/edit-user/:id" element={<EditDetails />} />
-          <Route path="*" element={<Error />} />
-        </Routes>
+        <ErrorBoundary>
+          <Toaster position="top-center" reverseOrder={false} />
+          <Routes>
+            {/* Define the routes for different pages */}
+            <Route path="/" element={<Home />} />
+            <Route path="/edit-form" element={<Home />} />
+            <Route path="/view-user/:id" element={<ViewDetails />} />
+            <Route path="/add-user" element={<AddDetails />} />
+            <Route path="/edit-user/:id" element={<EditDetails />} />
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </ErrorBoundary>
       </AppContext.Provider>
     </div>
   );
