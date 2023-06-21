@@ -1,0 +1,82 @@
+.table-headerss {
+  background-color: black !important;
+  color: #fdfdfd;
+}
+th {
+  background-color: black !important;
+  color: #fdfdfd !important;
+}
+.pagination-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  margin-right: 50px;
+}
+.table-container {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 0%;
+  padding-bottom: 4px;
+  border-radius: 5px;
+}
+.table-main {
+  margin-top: 50px;
+}
+.active > .page-link {
+  background-color: rgb(223, 50, 50);
+  border-color: rgb(213, 47, 47);
+}
+.table-dropdown-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+
+  font-weight: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.dropdown-toggle:focus {
+  border: none;
+}
+.dropdown-toggle:hover {
+  border-color: #fdfdfd;
+}
+.dropdown-toggle::after {
+  content: unset;
+}
+
+.table-view-button {
+  color: green;
+  margin-right: 10px;
+}
+.table-edit-button {
+  color: rgb(66, 39, 182);
+  margin-right: 10px;
+}
+.table-delete-button {
+  color: rgb(255, 8, 8);
+  margin-right: 10px;
+}
+.table-active-button {
+  width: 105px !important;
+}
+.table-chevronbutton{
+  float: right;
+   margin-left: 3px;
+   margin-top: 4px;
+}
+.table-edit ,
+.table-view{
+  color: rgb(199, 73, 44);
+}
+.page-link{
+  color: rgb(199, 73, 44);
+}
+@media (max-width: 768px) {
+  .table-container {
+    width: 95vw;
+  }
+}

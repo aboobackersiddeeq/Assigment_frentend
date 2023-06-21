@@ -1,0 +1,10 @@
+.search-right-button {
+  float: right;
+  margin-left: 20px;
+}
+@media (max-width: 768px) {
+  .search-right-button {
+    margin-top: 20px;
+    float: left;
+  }
+}
