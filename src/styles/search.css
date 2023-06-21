@@ -4,7 +4,28 @@
 }
 @media (max-width: 768px) {
   .search-right-button {
-    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
     float: left;
+    width: 27vw;
   }
 }
+@media (max-width: 767px) {
+  .search-right-button {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    float: left;
+    width: 31vw;
+  }
+}
+@media (max-width: 480px) {
+  .search-right-button {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    float: left;
+    width: 39vw;
+  }
+}
+  
