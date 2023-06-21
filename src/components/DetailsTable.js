@@ -132,6 +132,8 @@ const DetailsTable = ({ itemsPerPages }) => {
   return (
     <div className="table-main">
       <div className="container table-container">
+        {usersData?.length ?(<>
+
         <Table responsive="lg">
           <thead className="table-headers">
             <tr>
@@ -160,7 +162,7 @@ const DetailsTable = ({ itemsPerPages }) => {
                         className="table-active-button"
                         variant="danger"
                         id="dropdown-basic"
-                      >
+                        >
                         {element.status}{" "}
                         <ChevronDown className="table-chevronbutton" />
                       </Dropdown.Toggle>
@@ -174,7 +176,7 @@ const DetailsTable = ({ itemsPerPages }) => {
                         <Dropdown.Item
                           href="#/action-2"
                           onClick={() => activeUser(element._id, "InActive")}
-                        >
+                          >
                           InActive
                         </Dropdown.Item>
                       </Dropdown.Menu>
@@ -190,7 +192,7 @@ const DetailsTable = ({ itemsPerPages }) => {
                       variant=""
                       style={null}
                       title={<MoreVert />}
-                    >
+                      >
                       <Dropdown.Item eventKey="1">
                         <EyeFill
                           className="table-view-button"
@@ -208,7 +210,7 @@ const DetailsTable = ({ itemsPerPages }) => {
                       <Dropdown.Item
                         eventKey="3"
                         onClick={() => handleDelete(element._id)}
-                      >
+                        >
                         <Trash className="table-delete-button" />
                         Delete
                       </Dropdown.Item>
@@ -224,12 +226,12 @@ const DetailsTable = ({ itemsPerPages }) => {
           totalPages={Math.ceil(usersData?.length / itemsPerPage)}
           currentPage={currentPage}
           onSelect={handlePageChange}
-        >
+          >
           <Pagination.Prev
             className="pagination-arrow-button"
             onClick={handlePrevClick}
             disabled={currentPage === 1}
-          />
+            />
           <Pagination.Item active>{currentPage}</Pagination.Item>
           <Pagination.Next
             className="pagination-arrow-button"
@@ -237,8 +239,10 @@ const DetailsTable = ({ itemsPerPages }) => {
             disabled={
               currentPage === Math.ceil(usersData?.length / itemsPerPage)
             }
-          />
+            />
         </Pagination>
+        </>
+        ):<p className="table-no-result">No Results</p>}
       </div>
     </div>
   );
