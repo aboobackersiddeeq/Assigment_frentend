@@ -10,7 +10,7 @@ import {
   ChevronDown,
 } from "react-bootstrap-icons";
 import { MoreVert } from "@mui/icons-material";
-import { Avatar } from "@mui/material";
+import { Avatar, Skeleton } from "@mui/material";
 import { toast } from "react-hot-toast";
 import axios from "../axios/axios";
 import { baseUrl } from "../constants/BaseURL";
@@ -20,6 +20,7 @@ import { AppContext } from "../context/AppContext";
 const DetailsTable = ({ itemsPerPages }) => {
   // Accessing data from AppContext
   const { setUsersData, usersData } = useContext(AppContext);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const itemsPerPage = itemsPerPages || 6;
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,6 +50,7 @@ const DetailsTable = ({ itemsPerPages }) => {
         .then((response) => {
           if (response.data.status === "success") {
             setUsersData(response.data.result);
+            setIsLoading(false);
           } else {
             toast.error(response.data.message, "error");
           }
@@ -58,7 +60,9 @@ const DetailsTable = ({ itemsPerPages }) => {
         });
     } catch (error) {
       toast.error(error.message, "Network error");
-    }
+    } 
+      
+   
   }, [setUsersData]);
 
   // Handle edit button click
@@ -131,119 +135,146 @@ const DetailsTable = ({ itemsPerPages }) => {
 
   return (
     <div className="table-main">
-      <div className="container table-container">
-        {usersData?.length ?(<>
-
-        <Table responsive="lg">
-          <thead className="table-headers">
-            <tr>
-              <th>ID</th>
-              <th>FullName</th>
-              <th>Email</th>
-              <th>Gender</th>
-              <th>Status</th>
-              <th>Profile</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentPageItems.map((element, index) => {
-              return (
-                <tr key={element._id}>
-                  <td>{startIndex + index + 1}</td>
-                  <td>
-                    {element.firstName} {element.lastName}
-                  </td>
-                  <td>{element.email}</td>
-                  <td>{element.gender === "male" ? "M" : "F"}</td>
-                  <td>
-                    <Dropdown>
-                      <Dropdown.Toggle
-                        className="table-active-button"
-                        variant="danger"
-                        id="dropdown-basic"
-                        >
-                        {element.status}{" "}
-                        <ChevronDown className="table-chevronbutton" />
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item
-                          href="#/action-1"
-                          onClick={() => activeUser(element._id, "Active")}
-                        >
-                          Active
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          href="#/action-2"
-                          onClick={() => activeUser(element._id, "InActive")}
+      {isLoading ? (
+        <div className="container">
+          <Skeleton
+            animation="wave"
+            variant="rect"
+            height={50}
+          />
+          <div className="table-skeleton"/>
+          <Skeleton
+            animation="wave"
+            variant="rect"
+            height={400}
+          />
+        </div>
+      ) : (
+        <div className="container table-container">
+          {usersData?.length ? (
+            <>
+              <Table responsive="lg">
+                <thead className="table-headers">
+                  <tr>
+                    <th>ID</th>
+                    <th>FullName</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Status</th>
+                    <th>Profile</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentPageItems.map((element, index) => {
+                    return (
+                      <tr key={element._id}>
+                        <td>{startIndex + index + 1}</td>
+                        <td>
+                          {element.firstName} {element.lastName}
+                        </td>
+                        <td>{element.email}</td>
+                        <td>{element.gender === "male" ? "M" : "F"}</td>
+                        <td>
+                          <Dropdown>
+                            <Dropdown.Toggle
+                              className="table-active-button"
+                              variant="danger"
+                              id="dropdown-basic"
+                            >
+                              {element.status}{" "}
+                              <ChevronDown className="table-chevronbutton" />
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                              <Dropdown.Item
+                                href="#/action-1"
+                                onClick={() =>
+                                  activeUser(element._id, "Active")
+                                }
+                              >
+                                Active
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                href="#/action-2"
+                                onClick={() =>
+                                  activeUser(element._id, "InActive")
+                                }
+                              >
+                                InActive
+                              </Dropdown.Item>
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        </td>
+                        <td>
+                          <Avatar
+                            alt="Profile"
+                            src={`${baseUrl}${element.image}`}
+                          />
+                        </td>
+                        <td>
+                          <DropdownButton
+                            className="table-dropdown-button"
+                            drop="down"
+                            variant=""
+                            style={null}
+                            title={<MoreVert />}
                           >
-                          InActive
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
-                  <td>
-                    <Avatar alt="Profile" src={`${baseUrl}${element.image}`} />
-                  </td>
-                  <td>
-                    <DropdownButton
-                      className="table-dropdown-button"
-                      drop="down"
-                      variant=""
-                      style={null}
-                      title={<MoreVert />}
-                      >
-                      <Dropdown.Item eventKey="1">
-                        <EyeFill
-                          className="table-view-button"
-                          onClick={() => handleView(element._id)}
-                        />
-                        <span className="table-view">View</span>
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        eventKey="2"
-                        onClick={() => handleEdit(element._id)}
-                      >
-                        <PencilSquare className="table-edit-button" />
-                        <span className="table-edit">Edit</span>
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        eventKey="3"
-                        onClick={() => handleDelete(element._id)}
-                        >
-                        <Trash className="table-delete-button" />
-                        Delete
-                      </Dropdown.Item>
-                    </DropdownButton>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
-        <Pagination
-          className="pagination-container"
-          totalPages={Math.ceil(usersData?.length / itemsPerPage)}
-          currentPage={currentPage}
-          onSelect={handlePageChange}
-          >
-          <Pagination.Prev
-            className="pagination-arrow-button"
-            onClick={handlePrevClick}
-            disabled={currentPage === 1}
-            />
-          <Pagination.Item active>{currentPage}</Pagination.Item>
-          <Pagination.Next
-            className="pagination-arrow-button"
-            onClick={handleNextClick}
-            disabled={
-              currentPage === Math.ceil(usersData?.length / itemsPerPage)
-            }
-            />
-        </Pagination>
-        </>
-        ):<p className="table-no-result">No Results</p>}
-      </div>
+                            <Dropdown.Item eventKey="1">
+                              <EyeFill
+                                className="table-view-button"
+                                onClick={() => handleView(element._id)}
+                              />
+                              <span className="table-view">View</span>
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                              eventKey="2"
+                              onClick={() => handleEdit(element._id)}
+                            >
+                              <PencilSquare className="table-edit-button" />
+                              <span className="table-edit">Edit</span>
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                              eventKey="3"
+                              onClick={() => handleDelete(element._id)}
+                            >
+                              <Trash className="table-delete-button" />
+                              Delete
+                            </Dropdown.Item>
+                          </DropdownButton>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </Table>
+              <Pagination
+                className="pagination-container"
+                totalPages={Math.ceil(usersData?.length / itemsPerPage)}
+                currentPage={currentPage}
+                onSelect={handlePageChange}
+              >
+                <Pagination.Prev
+                  className="pagination-arrow-button"
+                  onClick={handlePrevClick}
+                  disabled={currentPage === 1}
+                />
+                <Pagination.Item active>{currentPage}</Pagination.Item>
+                <Pagination.Next
+                  className="pagination-arrow-button"
+                  onClick={handleNextClick}
+                  disabled={
+                    currentPage === Math.ceil(usersData?.length / itemsPerPage)
+                  }
+                />
+              </Pagination>
+            </>
+          ) : (
+            <>
+              <p className="table-no-result">No Results</p>
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 };

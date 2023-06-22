@@ -63,22 +63,26 @@ th {
 .table-active-button {
   width: 105px !important;
 }
-.table-chevronbutton{
+.table-chevronbutton {
   float: right;
-   margin-left: 3px;
-   margin-top: 4px;
+  margin-left: 3px;
+  margin-top: 4px;
 }
-.table-edit ,
-.table-view{
+.table-edit,
+.table-view {
   color: rgb(199, 73, 44);
 }
-.page-link{
+.page-link {
   color: rgb(199, 73, 44);
 }
-.table-no-result{
+.table-no-result {
   text-align: center;
   margin: 20px;
   padding-top: 20px;
+}
+.table-skeleton {
+  margin: 5px;
+  padding: 0%;
 }
 @media (max-width: 768px) {
   .table-container {
