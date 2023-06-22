@@ -60,9 +60,7 @@ const DetailsTable = ({ itemsPerPages }) => {
         });
     } catch (error) {
       toast.error(error.message, "Network error");
-    } 
-      
-   
+    }
   }, [setUsersData]);
 
   // Handle edit button click
@@ -137,17 +135,9 @@ const DetailsTable = ({ itemsPerPages }) => {
     <div className="table-main">
       {isLoading ? (
         <div className="container">
-          <Skeleton
-            animation="wave"
-            variant="rect"
-            height={50}
-          />
-          <div className="table-skeleton"/>
-          <Skeleton
-            animation="wave"
-            variant="rect"
-            height={400}
-          />
+          <Skeleton animation="wave" variant="rect" height={50} />
+          <div className="table-skeleton" />
+          <Skeleton animation="wave" variant="rect" height={400} />
         </div>
       ) : (
         <div className="container table-container">
@@ -219,11 +209,11 @@ const DetailsTable = ({ itemsPerPages }) => {
                             style={null}
                             title={<MoreVert />}
                           >
-                            <Dropdown.Item eventKey="1">
-                              <EyeFill
-                                className="table-view-button"
-                                onClick={() => handleView(element._id)}
-                              />
+                            <Dropdown.Item
+                              eventKey="1"
+                              onClick={() => handleView(element._id)}
+                            >
+                              <EyeFill className="table-view-button" />
                               <span className="table-view">View</span>
                             </Dropdown.Item>
                             <Dropdown.Item
