@@ -1,4 +1,4 @@
-import { Avatar } from "@mui/material";
+import { Avatar, Skeleton } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -12,6 +12,7 @@ const EditForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [details, setDetails] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useState("");
   const [profileError, setProfileError] = useState("");
   // Validation schema of edit user
@@ -38,6 +39,7 @@ const EditForm = () => {
         .then((response) => {
           if (response.data.status === "success") {
             setDetails(response.data.result);
+            setIsLoading(false)
           } else {
             toast.error(response.data.message, "error");
           }
@@ -117,6 +119,30 @@ const EditForm = () => {
   return (
     <div>
       <div className="container ">
+      {isLoading ? (
+        <div >
+          <Skeleton
+            animation="wave"
+            variant="rect"
+            height={50}
+          />
+          <div className="table-skeleton"/>
+          <div className="d-flex align-items-center flex-column">
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            height={100}
+            width={100}
+          />
+          </div>
+          <div className="table-skeleton"/>
+          <Skeleton
+            animation="wave"
+            variant="rect"
+            height={400}
+          />
+        </div>
+      ) : (
         <div className="row">
           <h1 className="text-center df-header ">Edit Your Details </h1>
           <div className="col-md-12 order-md-1 details_form ">
@@ -297,6 +323,7 @@ const EditForm = () => {
             )}
           </div>
         </div>
+      )}
       </div>
     </div>
   );
